@@ -16,6 +16,7 @@ dist-ssr
 !.env.example
 cypress/evidence/
 cypress/downloads/
+reports/
 
 # Editor directories and files
 .vscode/*
