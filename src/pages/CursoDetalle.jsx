@@ -5,6 +5,8 @@ import usePageTitle from '../hooks/usePageTitle'
 import { getStoredToken } from '../utils/auth'
 import { resolveImage } from '../utils/imageResolver'
 import '../styles/detail.css'
+import CourseLearning from '../components/CourseLearning'
+import CourseReviews from '../components/CourseReviews'
 
 const getCourseId = (course) => course.id_curso || course.id
 const getProgressLabel = (estado) => {
@@ -15,11 +17,6 @@ const getProgressLabel = (estado) => {
 const formatLevel = (level) => (
   level === 'basico' || level === 'Basico' ? 'Básico' : level
 )
-const fallbackModules = [
-  { id_modulo: 'intro', titulo: 'Introducción' },
-  { id_modulo: 'concepts', titulo: 'Conceptos principales' },
-  { id_modulo: 'activity', titulo: 'Actividad final' }
-]
 
 export default function CursoDetalle() {
   usePageTitle('Detalle de curso')
@@ -82,7 +79,7 @@ export default function CursoDetalle() {
     () => [...modules].sort((first, second) => Number(first.orden_modulo || 0) - Number(second.orden_modulo || 0)),
     [modules]
   )
-  const visibleModules = sortedModules.length > 0 ? sortedModules : fallbackModules
+  const visibleModules = sortedModules
   const hasRealModules = sortedModules.length > 0
 
   const volverAtras = () => {
@@ -111,6 +108,11 @@ export default function CursoDetalle() {
     } finally {
       setSaving(false)
     }
+  }
+
+  const refreshProgress = async () => {
+    const response=await api.get('/usuarios/me/cursos')
+    setProgress(response.data.data.find(item=>String(getCourseId(item))===String(id))||null)
   }
 
   const finishCourse = async () => {
@@ -197,7 +199,7 @@ export default function CursoDetalle() {
       <section className="course-detail-layout">
         <aside className="course-content-sidebar" aria-label="Contenido del curso">
           <h2>Contenido del curso</h2>
-          {!hasRealModules && <p className="course-content-note">Vista previa del contenido</p>}
+          {!hasRealModules && <p className="course-content-note">Aún no hay módulos publicados.</p>}
           <div className="course-module-list">
             {visibleModules.map((module, index) => (
               <article key={module.id_modulo || module.orden_modulo || module.titulo} className="course-module-item">
@@ -225,8 +227,8 @@ export default function CursoDetalle() {
                 )}
                 {estado === 'en_progreso' && (
                   <>
-                    <button type="button" className="btn btn-solid" disabled={saving}>Continuar</button>
-                    <button type="button" className="btn btn-outline" disabled={saving} onClick={finishCourse}>Terminar curso</button>
+                    <a className="btn btn-solid" href="#learning-content">Continuar</a>
+                    <button type="button" className="btn btn-outline" disabled={saving||porcentaje<100} onClick={finishCourse}>Terminar curso</button>
                     <button type="button" className="btn btn-outline" disabled={saving} onClick={cancelCourse}>Cancelar curso</button>
                   </>
                 )}
@@ -273,6 +275,9 @@ export default function CursoDetalle() {
               <span style={{ width: `${Math.min(porcentaje, 100)}%` }} />
             </div>
           </section>
+          {progress?.finalizacion_historica_sin_validar===1&&<p role="status">La finalización anterior no tiene módulos verificados. Completa los contenidos para validar tu certificado.</p>}
+          <CourseLearning courseId={id} enrolled={Boolean(progress)} onChange={refreshProgress}/>
+          <CourseReviews courseId={id} enrolled={Boolean(progress)}/>
         </section>
       </section>
     </main>

@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import MainHeader from './components/MainHeader'
 import Cursos from './pages/Cursos'
+import AdminModulos from './pages/admin/AdminModulos'
 import Principal from './pages/Principal'
 import Retos from './pages/Retos'
 import CursoDetalle from './pages/CursoDetalle'
@@ -54,6 +55,7 @@ function AppContent() {
         <Route element={<AdminRoute />}>
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/admin/cursos" element={<AdminCursos />} />
+          <Route path="/admin/cursos/:id/modulos" element={<AdminModulos />} />
           <Route path="/admin/cursos/crear" element={<CrearCurso />} />
           <Route path="/admin/cursos/editar/:id" element={<EditarCurso />} />
           <Route path="/admin/retos" element={<AdminRetos />} />

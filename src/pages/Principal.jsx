@@ -24,7 +24,8 @@ export default function Principal() {
         <article className="hero-content">
           <h1>Aprende y actúa por el planeta</h1>
           <p>
-            Convierte conocimiento en impacto real: aprende hoy y transforma tu entorno mañana.
+            El desperdicio de agua, los residuos y la pérdida de biodiversidad requieren decisiones informadas.
+            Aprende sobre el cuidado de tu entorno con cursos ambientales, contenidos por módulos y seguimiento de tu avance.
           </p>
 
           <div className="hero-buttons">
