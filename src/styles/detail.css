@@ -306,6 +306,17 @@
   gap: 12px;
 }
 
+.learning-content { margin-top: 24px; scroll-margin-top: 24px; }
+.learning-content h2 { margin: 0 0 18px; }
+.learning-content h3 { margin-top: 24px; }
+.learning-navigation { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 24px; }
+.learning-navigation [aria-pressed="true"] { background: #135c49; color: #f0fff8; }
+.learning-text { white-space: pre-wrap; overflow-wrap: anywhere; max-width: 72ch; line-height: 1.65; margin-bottom: 24px; }
+.learning-content textarea { display: block; width: 100%; box-sizing: border-box; background: #062b23; color: #e8fff6; border: 1px solid #539b83; border-radius: 6px; padding: 12px; font: inherit; margin: 10px 0; resize: vertical; }
+.learning-content a { color: #8ef0c9; }
+.review-entry { padding: 18px 0; border-bottom: 1px solid #29574a; overflow-wrap: anywhere; }
+.learning-content button:focus-visible,.learning-content textarea:focus-visible,.learning-content a:focus-visible { outline: 3px solid #b6f7df; outline-offset: 3px; }
+
 .detail-list-item {
   display: grid;
   gap: 6px;

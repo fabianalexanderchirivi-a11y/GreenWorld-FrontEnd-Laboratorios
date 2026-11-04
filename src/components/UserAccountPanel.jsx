@@ -215,6 +215,11 @@ export default function UserAccountPanel({ mode = 'panel' }) {
               </section>
 
               <section className="profile-sections" aria-label="Actividad reciente">
+                <section className="profile-section" aria-label="Certificados obtenidos">
+                  <h2>Certificados obtenidos</h2>
+                  {courses.filter(c=>c.id_certificado).length?courses.filter(c=>c.id_certificado).map(c=><p key={c.id_certificado}><Link className="profile-item-action" to={`/cursos/${c.id_curso}`}>{c.titulo}: consultar y descargar certificado</Link></p>):<p>Aún no tienes certificados emitidos con módulos verificados.</p>}
+                  <Link className="profile-item-action" to="/cursos">Explorar cursos disponibles</Link>
+                </section>
                 <ProgressSection
                   title="Cursos en progreso"
                   items={cursosEnProgreso}

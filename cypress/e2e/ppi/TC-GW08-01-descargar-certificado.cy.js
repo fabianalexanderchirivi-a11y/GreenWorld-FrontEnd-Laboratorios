@@ -1,16 +1,10 @@
 import { loginByApi, visitWithSession } from '../../support/ppi'
+import { validCertificateCourse } from '../../support/ppi-modules'
 
 describe('TC-GW08-01 — Generar y descargar certificado', () => {
   it('descarga un PDF auténtico para un curso completado', () => {
     loginByApi().then((session) => {
-      cy.request({
-        method: 'GET',
-        url: '/api/usuarios/me/cursos',
-        headers: { Authorization: `Bearer ${session.token}` },
-      }).then(({ body }) => {
-        const course = body.data.find((item) => item.estado_progreso === 'terminado')
-        expect(course, 'curso completado de prueba').to.exist
-
+      validCertificateCourse(session).then((course) => {
         cy.intercept('POST', `/api/cursos/${course.id_curso}/certificado`).as('issue')
         cy.intercept('GET', /\/api\/certificados\/\d+\/descargar$/).as('download')
         visitWithSession(`/cursos/${course.id_curso}`, session)

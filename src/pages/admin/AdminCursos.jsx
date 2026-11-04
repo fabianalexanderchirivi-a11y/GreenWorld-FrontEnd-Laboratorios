@@ -87,6 +87,7 @@ export default function AdminCursos() {
               <span>{formatLevel(course.nivel || course.level)}</span>
               <span>{course.estado || 'activo'}</span>
               <span className="admin-row-actions">
+                <Link to={`/admin/cursos/${getCourseId(course)}/modulos`} className="btn btn-outline">Módulos</Link>
                 <Link to={`/admin/cursos/editar/${getCourseId(course)}`} className="btn btn-outline">Editar</Link>
                 <button type="button" className="btn btn-outline" onClick={() => desactivarCurso(getCourseId(course))}>
                   Desactivar
